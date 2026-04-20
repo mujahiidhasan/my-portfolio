@@ -1,12 +1,556 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mujahid Hassan</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mujahid Hassan — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0a0a0a;
+  --paper:#f5f3ee;
+  --rule:#d8d4cc;
+  --soft:#8a8780;
+  --white:#ffffff;
+  --serif:'DM Serif Display',serif;
+  --mono:'DM Mono',monospace;
+  --sans:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  font-size:15px;
+  line-height:1.65;
+  overflow-x:hidden;
+}
+
+/* NOISE TEXTURE */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:999;
+  opacity:.5;
+}
+
+/* LAYOUT */
+.wrap{max-width:980px;margin:0 auto;padding:0 32px}
+
+/* TOP BAR */
+nav{
+  border-bottom:1px solid var(--ink);
+  padding:16px 0;
+  position:sticky;top:0;
+  background:var(--paper);
+  z-index:100;
+}
+nav .inner{
+  max-width:980px;margin:0 auto;padding:0 32px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.nav-name{font-family:var(--mono);font-size:12px;letter-spacing:.08em;font-weight:500}
+.nav-links{display:flex;gap:28px}
+.nav-links a{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  color:var(--soft);text-decoration:none;text-transform:uppercase;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--ink)}
+
+/* HERO */
+.hero{
+  padding:100px 0 80px;
+  border-bottom:1px solid var(--rule);
+  display:grid;
+  grid-template-columns:1fr 280px;
+  gap:40px;
+  align-items:end;
+}
+.hero-index{
+  font-family:var(--mono);font-size:11px;
+  color:var(--soft);letter-spacing:.12em;
+  margin-bottom:24px;display:block;
+}
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(52px,8vw,96px);
+  line-height:.95;
+  letter-spacing:-.02em;
+  margin-bottom:32px;
+}
+.hero h1 em{font-style:italic;color:var(--soft)}
+.hero-desc{
+  font-size:16px;
+  color:var(--soft);
+  max-width:460px;
+  line-height:1.75;
+  margin-bottom:32px;
+}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.08em;
+  color:var(--white);background:var(--ink);
+  padding:12px 24px;text-decoration:none;
+  transition:opacity .2s;
+}
+.hero-cta:hover{opacity:.8}
+.hero-aside{
+  border-left:1px solid var(--rule);
+  padding-left:32px;
+  align-self:stretch;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  gap:20px;
+}
+.aside-stat{border-bottom:1px solid var(--rule);padding-bottom:16px}
+.aside-stat:last-child{border:none;padding:0}
+.stat-num{
+  font-family:var(--serif);font-size:40px;line-height:1;
+  margin-bottom:4px;
+}
+.stat-label{font-family:var(--mono);font-size:10px;color:var(--soft);letter-spacing:.1em;text-transform:uppercase}
+
+/* SECTION HEADER */
+.sec-head{
+  display:flex;align-items:baseline;gap:16px;
+  border-bottom:1px solid var(--ink);
+  padding:40px 0 14px;
+  margin-bottom:40px;
+}
+.sec-head h2{font-family:var(--serif);font-size:32px;line-height:1}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--soft);letter-spacing:.1em}
+
+/* ABOUT */
+.about-section{padding:60px 0;border-bottom:1px solid var(--rule)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.about-text p{font-size:15.5px;line-height:1.85;color:#2a2a2a;margin-bottom:16px}
+.about-text p:last-child{margin:0}
+.about-links{display:flex;flex-direction:column;gap:12px;padding-top:8px}
+.about-link{
+  display:flex;align-items:center;justify-content:space-between;
+  border:1px solid var(--rule);padding:14px 16px;
+  text-decoration:none;color:var(--ink);
+  font-family:var(--mono);font-size:12px;
+  transition:all .2s;background:var(--white);
+}
+.about-link:hover{border-color:var(--ink);background:var(--ink);color:var(--white)}
+.about-link span{color:var(--soft);font-size:16px;transition:color .2s}
+.about-link:hover span{color:var(--white)}
+
+/* SKILLS */
+.skills-section{padding:60px 0;border-bottom:1px solid var(--rule)}
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule)}
+.skill-col{background:var(--paper);padding:24px 20px}
+.skill-col h3{
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--soft);
+  margin-bottom:16px;padding-bottom:12px;
+  border-bottom:1px solid var(--rule);
+}
+.skill-col ul{list-style:none}
+.skill-col li{
+  font-size:13.5px;padding:6px 0;
+  border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;gap:8px;
+}
+.skill-col li:last-child{border:none}
+.skill-col li::before{
+  content:'';display:inline-block;width:5px;height:5px;
+  background:var(--ink);flex-shrink:0;
+}
+
+/* PROJECTS */
+.projects-section{padding:60px 0;border-bottom:1px solid var(--rule)}
+.featured-project{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;border:1px solid var(--ink);
+  margin-bottom:24px;overflow:hidden;
+}
+.proj-preview{
+  background:var(--ink);
+  min-height:320px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+/* subway game mini-preview art */
+.game-art{width:100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center}
+.track{position:absolute;bottom:0;left:0;right:0;height:60px;background:#1a1a1a;border-top:2px solid #333}
+.track-line{position:absolute;bottom:20px;left:0;right:0;height:2px;background:#444}
+.runner{
+  position:absolute;bottom:60px;left:50%;transform:translateX(-50%);
+  width:24px;height:36px;background:var(--paper);
+}
+.runner::before{content:'';position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:var(--paper)}
+.obs{position:absolute;bottom:60px;background:#555}
+.obs1{right:80px;width:20px;height:48px}
+.obs2{right:140px;width:16px;height:32px}
+.obs3{right:30px;width:12px;height:24px}
+.game-label{
+  position:absolute;top:20px;left:20px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+  color:rgba(255,255,255,.4);text-transform:uppercase;
+}
+.game-score{
+  position:absolute;top:16px;right:20px;
+  font-family:var(--mono);font-size:20px;color:rgba(255,255,255,.6);
+}
+.scanlines{
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.08) 3px,rgba(0,0,0,.08) 4px);
+  pointer-events:none;
+}
+
+.proj-info{padding:32px 36px;display:flex;flex-direction:column;justify-content:space-between}
+.proj-tag{
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--soft);margin-bottom:16px;
+  display:flex;align-items:center;gap:8px;
+}
+.proj-tag::before{content:'★';font-size:10px}
+.proj-info h3{font-family:var(--serif);font-size:28px;line-height:1.1;margin-bottom:14px}
+.proj-info p{font-size:13.5px;color:var(--soft);line-height:1.75;margin-bottom:20px}
+.proj-features{list-style:none;margin-bottom:20px}
+.proj-features li{
+  font-size:12.5px;color:#444;
+  padding:5px 0;border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;gap:8px;
+}
+.proj-features li::before{content:'→';font-family:var(--mono);font-size:11px;color:var(--soft)}
+.proj-features li:last-child{border:none}
+.tech-stack{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px}
+.tech{
+  font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  padding:4px 10px;border:1px solid var(--rule);color:var(--soft);
+  background:var(--paper);
+}
+.proj-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+  border:1px solid var(--ink);padding:10px 18px;
+  text-decoration:none;color:var(--ink);
+  transition:all .2s;width:fit-content;
+}
+.proj-btn:hover{background:var(--ink);color:var(--white)}
+
+/* REPOS */
+.repos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule)}
+.repo-item{
+  background:var(--paper);padding:20px 24px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.repo-name{font-size:14px;font-weight:500;color:var(--ink)}
+.repo-lang{font-family:var(--mono);font-size:11px;color:var(--soft);display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+
+/* CONNECT */
+.connect-section{padding:60px 0}
+.connect-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:48px;align-items:center;
+}
+.connect-text h2{font-family:var(--serif);font-size:48px;line-height:1;margin-bottom:16px}
+.connect-text h2 em{font-style:italic;color:var(--soft)}
+.connect-text p{color:var(--soft);font-size:14px;line-height:1.75}
+.connect-list{display:flex;flex-direction:column;gap:1px;background:var(--rule)}
+.connect-item{
+  background:var(--paper);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 20px;text-decoration:none;color:var(--ink);
+  transition:all .2s;
+}
+.connect-item:hover{background:var(--ink);color:var(--white)}
+.connect-item .ci-left{display:flex;align-items:center;gap:12px}
+.connect-item .ci-icon{font-family:var(--mono);font-size:13px;font-weight:500}
+.connect-item .ci-label{font-size:13.5px}
+.connect-item .ci-arrow{font-family:var(--mono);font-size:13px;color:var(--soft);transition:color .2s}
+.connect-item:hover .ci-arrow{color:var(--white)}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--ink);
+  padding:20px 0;
+  display:flex;justify-content:space-between;align-items:center;
+}
+footer .wrap{width:100%;max-width:980px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+footer span{font-family:var(--mono);font-size:11px;color:var(--soft);letter-spacing:.06em}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* MARQUEE */
+.marquee-wrap{
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  overflow:hidden;padding:14px 0;margin:40px 0;
+}
+.marquee{display:flex;width:max-content;animation:marquee 18s linear infinite}
+.marquee span{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--soft);
+  padding:0 32px;white-space:nowrap;
+}
+.marquee span::before{content:'◆';margin-right:32px;font-size:8px}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+@media(max-width:700px){
+  .hero{grid-template-columns:1fr}
+  .hero-aside{display:none}
+  .about-grid,.featured-project,.connect-inner{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:repeat(2,1fr)}
+  .repos-grid{grid-template-columns:1fr}
+  .proj-preview{min-height:200px}
+  nav .nav-links{display:none}
+}
+</style>
 </head>
 <body>
-    <h1>JANI</h1>
 
+<nav>
+  <div class="inner">
+    <span class="nav-name">MH — Portfolio</span>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#connect">Connect</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero reveal">
+    <div>
+      <span class="hero-index">// FRESHER · 2026</span>
+      <h1>Mujahid<br><em>Hassan</em></h1>
+      <p class="hero-desc">Aspiring software developer with a passion for building interactive experiences — from browser games to real-world applications. Currently learning, always building.</p>
+      <a href="https://www.linkedin.com/in/mujahid-hassan-0a30b7382/" target="_blank" class="hero-cta">View LinkedIn →</a>
+    </div>
+    <div class="hero-aside">
+      <div class="aside-stat">
+        <div class="stat-num">01</div>
+        <div class="stat-label">Featured Project</div>
+      </div>
+      <div class="aside-stat">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Languages</div>
+      </div>
+      <div class="aside-stat">
+        <div class="stat-num">PK</div>
+        <div class="stat-label">Based in Pakistan</div>
+      </div>
+    </div>
+  </header>
+
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Python</span><span>Problem Solving</span><span>Game Dev</span><span>Web Dev</span><span>Open to Work</span>
+    <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Python</span><span>Problem Solving</span><span>Game Dev</span><span>Web Dev</span><span>Open to Work</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ABOUT -->
+  <section id="about" class="about-section reveal">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>About</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a fresher developer with a genuine curiosity for how software is built — and how it can be made to feel fun, useful, and polished. I enjoy working across the stack: designing interfaces in HTML and CSS, adding logic with JavaScript, and experimenting with Python for everything else.</p>
+        <p>Right now I'm focused on developing strong fundamentals, building real projects, and growing into a full professional developer. I'm open to internships, entry-level roles, and collaboration.</p>
+      </div>
+      <div class="about-links">
+        <a href="https://www.linkedin.com/in/mujahid-hassan-0a30b7382/" target="_blank" class="about-link">
+          <span style="font-size:13px">LinkedIn Profile</span>
+          <span>↗</span>
+        </a>
+        <a href="mailto:mujahidhassan@email.com" class="about-link">
+          <span style="font-size:13px">Send an Email</span>
+          <span>↗</span>
+        </a>
+        <a href="https://github.com/mujahidhassan" target="_blank" class="about-link">
+          <span style="font-size:13px">GitHub</span>
+          <span>↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="skills-section reveal">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-col">
+        <h3>Languages</h3>
+        <ul>
+          <li>HTML5</li>
+          <li>CSS3</li>
+          <li>JavaScript</li>
+          <li>Python</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h3>Frontend</h3>
+        <ul>
+          <li>Responsive Design</li>
+          <li>DOM Manipulation</li>
+          <li>Canvas API</li>
+          <li>Game Loops</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h3>Concepts</h3>
+        <ul>
+          <li>OOP Basics</li>
+          <li>Data Structures</li>
+          <li>Algorithms</li>
+          <li>Problem Solving</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h3>Tools</h3>
+        <ul>
+          <li>Git / GitHub</li>
+          <li>VS Code</li>
+          <li>Linux / CLI</li>
+          <li>Browser DevTools</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="projects-section reveal">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2>Projects</h2>
+    </div>
+
+    <div class="featured-project">
+      <div class="proj-preview">
+        <div class="game-art">
+          <div class="game-label">SUBWAY CHASE</div>
+          <div class="game-score">1240</div>
+          <div class="track">
+            <div class="track-line"></div>
+          </div>
+          <div class="runner"></div>
+          <div class="obs obs1"></div>
+          <div class="obs obs2"></div>
+          <div class="obs obs3"></div>
+          <div class="scanlines"></div>
+        </div>
+      </div>
+      <div class="proj-info">
+        <div>
+          <div class="proj-tag">Featured Project</div>
+          <h3>Subway Chase</h3>
+          <p>An endless runner game built entirely in the browser using vanilla JavaScript, HTML5 Canvas, and CSS. Dodge obstacles, rack up your score, and see how far you can go.</p>
+          <ul class="proj-features">
+            <li>Endless procedural obstacle generation</li>
+            <li>Smooth 60fps game loop via requestAnimationFrame</li>
+            <li>Jump mechanics with gravity physics</li>
+            <li>Live score counter & high score tracking</li>
+            <li>Increasing difficulty over time</li>
+            <li>Keyboard & tap/click controls</li>
+          </ul>
+          <div class="tech-stack">
+            <span class="tech">HTML5</span>
+            <span class="tech">CSS3</span>
+            <span class="tech">JavaScript</span>
+            <span class="tech">Canvas API</span>
+          </div>
+        </div>
+        <a href="#" class="proj-btn">Play Game →</a>
+      </div>
+    </div>
+
+    <!-- Repos -->
+    <div class="repos-grid">
+      <div class="repo-item">
+        <div class="repo-name">subway-chase-game</div>
+        <div class="repo-lang"><span class="dot" style="background:#f7df1e"></span>JavaScript</div>
+      </div>
+      <div class="repo-item">
+        <div class="repo-name">my-portfolio</div>
+        <div class="repo-lang"><span class="dot" style="background:#e44b23"></span>HTML / CSS</div>
+      </div>
+      <div class="repo-item">
+        <div class="repo-name">python-scripts</div>
+        <div class="repo-lang"><span class="dot" style="background:#3572A5"></span>Python</div>
+      </div>
+      <div class="repo-item">
+        <div class="repo-name">learning-js</div>
+        <div class="repo-lang"><span class="dot" style="background:#f7df1e"></span>JavaScript</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONNECT -->
+  <section id="connect" class="connect-section reveal">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2>Connect</h2>
+    </div>
+    <div class="connect-inner">
+      <div class="connect-text">
+        <h2>Let's<br><em>work</em><br>together.</h2>
+        <p>Open to internships, entry-level opportunities, freelance work, and interesting collaborations. Based in Pakistan.</p>
+      </div>
+      <div class="connect-list">
+        <a href="https://www.linkedin.com/in/mujahid-hassan-0a30b7382/" target="_blank" class="connect-item">
+          <div class="ci-left">
+            <span class="ci-icon">in</span>
+            <span class="ci-label">LinkedIn</span>
+          </div>
+          <span class="ci-arrow">↗</span>
+        </a>
+        <a href="mailto:mujahidhassan@email.com" class="connect-item">
+          <div class="ci-left">
+            <span class="ci-icon">✉</span>
+            <span class="ci-label">Email</span>
+          </div>
+          <span class="ci-arrow">↗</span>
+        </a>
+        <a href="https://github.com/mujahidhassan" target="_blank" class="connect-item">
+          <div class="ci-left">
+            <span class="ci-icon">⌥</span>
+            <span class="ci-label">GitHub</span>
+          </div>
+          <span class="ci-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> Mujahid Hassan</span>
+    <span>Pakistan · Open to Opportunities</span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent=new Date().getFullYear();
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
 </body>
 </html>
